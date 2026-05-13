@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Program Digital Hari Guru SMK Kanowit 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-btn.active {
+            background-color: #1e40af;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <header class="bg-blue-900 text-white py-10 px-4 text-center shadow-lg mb-8">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">SAMBUTAN HARI GURU 2026</h1>
+        <h2 class="text-xl md:text-2xl font-semibold opacity-90">SMK KANOWIT</h2>
+        <p class="mt-4 text-sm md:text-base bg-blue-800 inline-block px-4 py-2 rounded-full">
+            "Guru Bitara Nadi Negara"
+        </p>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4">
+        
+        <nav class="flex flex-wrap justify-center gap-2 mb-8 sticky top-4 z-50 bg-white/80 p-2 rounded-xl shadow-md backdrop-blur">
+            <button onclick="showTab('tab-poster')" class="nav-btn active px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300">
+                <i class="fas fa-image mr-2"></i>Poster
+            </button>
+            <button onclick="showTab('tab-aturcara')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-600 hover:bg-gray-100">
+                <i class="fas fa-calendar-alt mr-2"></i>Aturcara
+            </button>
+            <button onclick="showTab('tab-ikrar')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-600 hover:bg-gray-100">
+                <i class="fas fa-hand-paper mr-2"></i>Ikrar
+            </button>
+            <button onclick="showTab('tab-lagu')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-600 hover:bg-gray-100">
+                <i class="fas fa-music mr-2"></i>Lirik Lagu
+            </button>
+            <button onclick="showTab('tab-kosong')" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 text-gray-600 hover:bg-gray-100">
+                <i class="fas fa-info-circle mr-2"></i>Info
+            </button>
+        </nav>
+
+        <section id="tab-poster" class="tab-content active glass-morphism p-6 rounded-3xl shadow-xl text-center border-t-8 border-blue-600">
+            <h3 class="text-2xl font-bold text-blue-900 mb-6">Poster Hari Guru</h3>
+            <div class="aspect-[3/4] bg-gray-100 rounded-2xl flex flex-col items-center justify-center border-4 border-dashed border-gray-300 p-8">
+                <i class="fas fa-file-image text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 font-medium text-lg">Ruang untuk Poster Rasmi</p>
+                <p class="text-gray-400 text-sm mt-2">Sila muat naik atau masukkan imej poster anda di sini nanti.</p>
+            </div>
+        </section>
+
+        <section id="tab-aturcara" class="tab-content glass-morphism p-6 rounded-3xl shadow-xl border-t-8 border-blue-600">
+            <h3 class="text-2xl font-bold text-blue-900 mb-6 text-center">Tentatif Program</h3>
+            <div class="space-y-4">
+                <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">07.00 pagi</div>
+                    <div class="text-gray-700">Ketibaan tetamu dan kehadiran guru-guru</div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-white border border-blue-100 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">07.10 pagi</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Ketibaan Pengetua</li>
+                        <li>Nyanyian Lagu Negaraku</li>
+                        <li>Nyanyian Lagu Ibu Pertiwi</li>
+                        <li>Bacaan doa</li>
+                    </ul>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">07.20 pagi</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Ucapan alu-aluan wakil pelajar</li>
+                        <li>Ucapan Pengetua SMK Kanowit</li>
+                    </ul>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-white border border-blue-100 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">07.35 pagi</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Bacaan Perutusan Ketua Pengarah Pendidikan Malaysia</li>
+                        <li>Bacaan Perutusan Menteri Pendidikan Malaysia</li>
+                    </ul>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">07.45 pagi</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Ikrar Hari Guru</li>
+                        <li>Pemotongan kek Hari Guru</li>
+                    </ul>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-white border border-blue-100 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">07.55 pagi</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Persembahan guru</li>
+                        <li>Penyampaian hadiah kelas</li>
+                        <li>Penyampaian hadiah guru</li>
+                    </ul>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">08.10 pagi</div>
+                    <ul class="list-disc list-inside space-y-1 text-gray-700">
+                        <li>Nyanyian Hari Guru: "Pendidik Bumi Kenyalang"</li>
+                        <li>Nyanyian "Kami Guru Malaysia"</li>
+                    </ul>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-white border border-blue-100 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">08.20 pagi</div>
+                    <div class="text-gray-700">Nyanyian Lagu Sekolah "Wawasan Sejati"</div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">08.25 pagi</div>
+                    <div class="text-gray-700">Jamuan khas Hari Guru</div>
+                </div>
+                <div class="flex items-start gap-4 p-4 bg-white border border-blue-100 rounded-xl">
+                    <div class="font-bold text-blue-800 whitespace-nowrap min-w-[100px]">08.30 pagi</div>
+                    <div class="text-gray-700 font-bold">Bersurai</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-ikrar" class="tab-content glass-morphism p-8 rounded-3xl shadow-xl border-t-8 border-blue-600 text-center">
+            <h3 class="text-2xl font-bold text-blue-900 mb-8">Ikrar Hari Guru</h3>
+            <div class="text-lg leading-relaxed text-gray-800 italic space-y-6">
+                <p>"Bahawasanya kami, guru-guru negara Malaysia dengan ini berikrar, mendukung terus cita-cita kami terhadap tugas kami dan menyatakan keyakinan kami pada cita-cita murni pekerjaan kami."</p>
+                <p>"Kami akan berbakti kepada masyarakat dan negara kami. Kami sentiasa menjunjung Perlembagaan negara, kami mengamalkan prinsip-prinsip Rukun Negara pada setiap masa."</p>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-100">
+                <p class="font-bold text-blue-900 uppercase">Ikrar Diketuai Oleh:</p>
+                <p class="text-gray-700 text-xl font-semibold">En. Balintian Anak Nobert Jubit</p>
+                <p class="text-sm text-gray-500 italic">Penolong Kanan Hal Ehwal Murid</p>
+            </div>
+        </section>
+
+        <section id="tab-lagu" class="tab-content glass-morphism p-6 rounded-3xl shadow-xl border-t-8 border-blue-600">
+            <h3 class="text-2xl font-bold text-blue-900 mb-8 text-center">Lirik Lagu Rasmi</h3>
+            
+            <div class="space-y-10">
+                <div class="bg-blue-50 p-6 rounded-2xl">
+                    <h4 class="text-xl font-bold text-blue-800 mb-4 border-b border-blue-200 pb-2">1. Kami Guru Malaysia</h4>
+                    <pre class="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed text-center">
+Kami Guru Malaysia
+Berikrar dan berjanji
+Mendidik dan memimpin
+Putra putri negara kita
+
+Pada Seri Paduka
+Kami tumpahkan setia
+Rukun Negara kita
+Panduan hidup kami semua
+
+Di bidang pembangunan
+Kami tetap bersama
+Membantu, membina
+Negara yang tercinta
+
+Amanah yang diberi
+Kami tak persiakan
+Apa yang kami janji
+Tunai tetap kami tunaikan
+                    </pre>
+                </div>
+
+                <div class="bg-orange-50 p-6 rounded-2xl">
+                    <h4 class="text-xl font-bold text-orange-800 mb-4 border-b border-orange-200 pb-2">2. Pendidik Bumi Kenyalang</h4>
+                    <pre class="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed text-center">
+Pendidik Bumi Kenyalang
+Berdiri teguh di pentas dunia
+Mendidik anak bangsa tercinta
+Mencapai cita-cita mulia
+
+**Korus:**
+Pendidik Bumi Kenyalang
+Berbakti tanpa rasa jemu
+Mencurah bakti dan tenaga
+Demi masa depan negara
+
+Kita adalah obor penyuluh
+Menerangi kegelapan malam
+Membina modal insan cemerlang
+Di Bumi Kenyalang yang gemilang
+                    </pre>
+                </div>
+
+                <div class="bg-green-50 p-6 rounded-2xl">
+                    <h4 class="text-xl font-bold text-green-800 mb-4 border-b border-green-200 pb-2">3. Lagu Sekolah (Wawasan Sejati)</h4>
+                    <pre class="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed text-center">
+SMK KANOWIT TERCINTA
+MEDAN ILMU DITIMBA
+INDAH MEGA PENUH CERIA
+WARGANYA BERBILANG BANGSA
+
+KAMI PUNYA WAWASAN MULIA
+SEKOLAH PRIMIER IMPIAN SEMUA
+KEUNGGULAN TERUS DICIPTA
+BERWATAK DAN BERBUDAYA
+BAKAT DIASAH JIWA SUCI
+
+NILAI MURNI DIAMALI
+BIJAKSANA PEKERTI MULIA
+ILMU PENUH DI DADA
+KAMI BERSATU HATI
+
+KECEMERLANGAN MILIK KAMI
+KUAT AZAM JATI DIRI
+SEDIA MENABUR BAKTI
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-kosong" class="tab-content glass-morphism p-12 rounded-3xl shadow-xl border-t-8 border-blue-600 text-center">
+            <i class="fas fa-info-circle text-5xl text-blue-200 mb-6"></i>
+            <h3 class="text-2xl font-bold text-blue-900 mb-4">Informasi Tambahan</h3>
+            <p class="text-gray-500">Kemas kini akan datang untuk galeri foto dan senarai pemenang hadiah.</p>
+        </section>
+
+    </main>
+
+    <footer class="mt-12 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 SMK Kanowit. Direka untuk Pendidik.</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Show selected tab
+            const target = document.getElementById(tabId);
+            target.classList.add('active');
+
+            // Update nav buttons style
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.remove('text-white');
+                btn.classList.add('text-gray-600');
+            });
+
+            const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabId));
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('text-gray-600');
+            
+            // Scroll to top of content
+            window.scrollTo({ top: 150, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
