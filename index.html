@@ -347,7 +347,7 @@
                         Bahawasanya kami, <br>guru-guru negara Malaysia, <br>dengan ini berikrar, <br>mendukung terus cita-cita kami terhadap tugas kami, <br>dan menyatakan keyakinan kami pada cita-cita murni pekerjaan kami.
                     </p>
                     <p class="text-slate-250 leading-relaxed font-medium">
-                        Kami akan berbakti kepada masyarakat dan negara kami. <br>Kami sentiasa menjunjung Perlembagaan negara, <br>kami mengamalkan prinsip-prinsip Rukun Negara pada setiap masa.
+                        Kami akan berbakti kepada masyarakat and negara kami. <br>Kami sentiasa menjunjung Perlembagaan negara, <br>kami mengamalkan prinsip-prinsip Rukun Negara pada setiap masa.
                     </p>
                 </div>
 
@@ -588,7 +588,7 @@ SEDIA MENABUR BAKTI!
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Global state and configurations
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'smk-kanowit-hari-guru-2026';
@@ -599,8 +599,8 @@ SEDIA MENABUR BAKTI!
 
         // Default initial wishes (Offline display and default records)
         let wishes = [
-            { id: "1", author: "Student SMKK", recipient: "Semua Guru", content: "Terima kasih cikgu atas tunjuk ajar dan ketegasan yang mendidik kami menjadi insan berguna!", date: "18 Mei 2026", timestamp: 1779124800000 },
-            { id: "2", author: "AM", recipient: "Semua Guru SMK Kanowit", content: "Selamat Hari Guru! Jasa dan pengorbanan cikgu semua tidak akan kami lupakan. Jasamu dikenang selamanya.", date: "18 Mei 2026", timestamp: 1779128400000 }
+            { id: "1", author: "Student SMKK", recipient: "Semua Guru", content: "Terima kasih cikgu atas tunjuk ajar dan ketegasan yang mendidik kami menjadi insan berguna!", date: "18 Mei 2026", timestamp: 1779124800000, likes: 5 },
+            { id: "2", author: "AM", recipient: "Semua Guru SMK Kanowit", content: "Selamat Hari Guru! Jasa dan pengorbanan cikgu semua tidak akan kami lupakan. Jasamu dikenang selamanya.", date: "18 Mei 2026", timestamp: 1779128400000, likes: 12 }
         ];
 
         // Safe initialization of Firebase config block
@@ -700,7 +700,7 @@ SEDIA MENABUR BAKTI!
             if (secs) secs.innerText = totalSecs < 10 ? '0' + totalSecs : totalSecs;
         }
 
-        // Render Wishes list into DOM layout safely
+        // Render Wishes list into DOM layout safely with status indicators and Like button
         function renderWishes(listToRender = wishes) {
             const container = document.getElementById('wishes-list');
             const countEl = document.getElementById('wish-count');
@@ -710,6 +710,11 @@ SEDIA MENABUR BAKTI!
             countEl.innerText = listToRender.length;
 
             listToRender.forEach(wish => {
+                const isCloud = wish.id && wish.id.length > 5;
+                const cloudStatusHtml = isCloud 
+                    ? `<span class="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 flex items-center gap-1 font-semibold"><i class="fas fa-cloud"></i> Awan</span>`
+                    : `<span class="text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100 flex items-center gap-1 font-semibold"><i class="fas fa-hdd"></i> Tempatan</span>`;
+
                 const card = document.createElement('div');
                 card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-all";
                 card.innerHTML = `
@@ -719,17 +724,60 @@ SEDIA MENABUR BAKTI!
                                 <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest block">Kepada</span>
                                 <span class="font-bold text-slate-800 text-sm">${wish.recipient}</span>
                             </div>
-                            <span class="text-[10px] text-slate-400 font-medium">${wish.date}</span>
+                            <div class="flex flex-col items-end gap-1">
+                                <span class="text-[10px] text-slate-400 font-medium">${wish.date}</span>
+                                ${cloudStatusHtml}
+                            </div>
                         </div>
                         <p class="text-slate-600 text-sm italic leading-relaxed">"${wish.content}"</p>
                     </div>
                     <div class="mt-4 pt-3 border-t border-slate-50/50 flex items-center justify-between">
                         <span class="text-xs font-bold text-teal-700">— ${wish.author}</span>
-                        <span class="text-slate-300 text-xs"><i class="fas fa-heart text-rose-400"></i></span>
+                        <button onclick="likeWish('${wish.id}')" class="group flex items-center gap-1.5 text-slate-400 hover:text-rose-500 transition-colors">
+                            <span class="text-xs font-semibold text-slate-500 group-hover:text-rose-600">${wish.likes || 0}</span>
+                            <i class="fas fa-heart text-slate-300 group-hover:text-rose-500 transition-all transform active:scale-125"></i>
+                        </button>
                     </div>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        // Interaksi menyukai ucapan (Likes) secara langsung atau mod simpanan tempatan
+        async function likeWish(wishId) {
+            // Jika ia tersimpan dalam Firestore
+            const isCloudDoc = wishId && wishId.length > 5;
+            if (useCloud && auth && auth.currentUser && isCloudDoc) {
+                try {
+                    const wishDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'wishes', wishId);
+                    await updateDoc(wishDocRef, {
+                        likes: increment(1)
+                    });
+                } catch (e) {
+                    console.error("Gagal menambah suka ucapan awan:", e);
+                }
+            } else {
+                // Simpanan Suka Tempatan (Local Likes fallback)
+                let localLikes = JSON.parse(localStorage.getItem('smk_kanowit_likes') || '{}');
+                localLikes[wishId] = (localLikes[wishId] || 0) + 1;
+                localStorage.setItem('smk_kanowit_likes', JSON.stringify(localLikes));
+
+                // Naik taraf nilai dalam memori program
+                const index = wishes.findIndex(w => w.id === wishId);
+                if (index !== -1) {
+                    wishes[index].likes = (wishes[index].likes || 0) + 1;
+                } else {
+                    let localWishes = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
+                    const lIndex = localWishes.findIndex(w => w.id === wishId);
+                    if (lIndex !== -1) {
+                        localWishes[lIndex].likes = (localWishes[lIndex].likes || 0) + 1;
+                        localStorage.setItem('smk_kanowit_wishes', JSON.stringify(localWishes));
+                    }
+                }
+                
+                // Pasang semula paparan
+                loadLocalWishesAsFallback();
+            }
         }
 
         // Handshake validation: Submit Wish through Cloud Database or local disk storage
@@ -748,7 +796,8 @@ SEDIA MENABUR BAKTI!
                 recipient: recipient,
                 content: content,
                 date: today,
-                timestamp: Date.now()
+                timestamp: Date.now(),
+                likes: 0
             };
 
             // Rule 3 Verification: Verify authenticated user is present before writing
@@ -770,10 +819,40 @@ SEDIA MENABUR BAKTI!
             document.getElementById('wish-content').value = '';
         }
 
+        // Penyelarasan Automatik latar belakang (Background Offline Auto-Sync)
+        async function syncOfflineWishes() {
+            if (!useCloud || !auth || !auth.currentUser) return;
+            
+            let localData = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
+            if (localData.length === 0) return;
+
+            console.log(`Menyelaraskan ${localData.length} ucapan tempatan ke awan...`);
+            let syncedIds = [];
+
+            for (let wish of localData) {
+                try {
+                    // Buang ID rawak tempatan sebelum menghantar ke Firebase
+                    const { id, ...cloudReadyData } = wish;
+                    await addDoc(wishesCollectionPath, cloudReadyData);
+                    syncedIds.push(id);
+                } catch (err) {
+                    console.error("Gagal menyelaraskan rekod ucapan luar talian:", err);
+                    break;
+                }
+            }
+
+            if (syncedIds.length > 0) {
+                const remaining = localData.filter(w => !syncedIds.includes(w.id));
+                localStorage.setItem('smk_kanowit_wishes', JSON.stringify(remaining));
+                showStatusMessage(`Berjaya menyelaraskan ${syncedIds.length} ucapan luar talian anda ke pelayan awan!`, true);
+            }
+        }
+
         // Fallback Storage Array
         function saveToLocalStorage(newWish) {
             let localData = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
-            localData.push({ id: Date.now().toString(), ...newWish });
+            const tempId = "local_" + Date.now();
+            localData.push({ id: tempId, ...newWish });
             localStorage.setItem('smk_kanowit_wishes', JSON.stringify(localData));
             
             const combined = [...wishes, ...localData].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
@@ -815,6 +894,7 @@ SEDIA MENABUR BAKTI!
             window.showTab = showTab;
             window.toggleZoom = toggleZoom;
             window.submitWish = submitWish;
+            window.likeWish = likeWish;
 
             // Start countdown
             setInterval(updateCountdown, 1000);
@@ -839,13 +919,16 @@ SEDIA MENABUR BAKTI!
                 await initAuth();
 
                 // Listen to Auth changes, then activate Snapshot Listener
-                onAuthStateChanged(auth, (user) => {
+                onAuthStateChanged(auth, async (user) => {
                     if (!user) {
                         loadLocalWishesAsFallback();
                         return;
                     }
 
                     updateConnectionBadge('cloud');
+
+                    // Penyelarasan ucapan luar talian sejurus bersambung
+                    await syncOfflineWishes();
 
                     // Safe realtime data subscription inside user authenticated session block
                     onSnapshot(wishesCollectionPath, (snapshot) => {
@@ -858,6 +941,20 @@ SEDIA MENABUR BAKTI!
                         cloudWishesList.forEach(cw => {
                             if (!merged.some(m => m.id === cw.id)) {
                                 merged.push(cw);
+                            } else {
+                                // Jika id ada tetapi mahu kemaskini bilangan Likes masa-nyata
+                                const index = merged.findIndex(m => m.id === cw.id);
+                                if (index !== -1) {
+                                    merged[index] = cw;
+                                }
+                            }
+                        });
+
+                        // Tambahkan ucapan tempatan yang belum diselaraskan (jika ada)
+                        let localWishes = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
+                        localWishes.forEach(lw => {
+                            if (!merged.some(m => m.id === lw.id)) {
+                                merged.push(lw);
                             }
                         });
 
@@ -877,7 +974,17 @@ SEDIA MENABUR BAKTI!
         function loadLocalWishesAsFallback() {
             updateConnectionBadge('local');
             const localData = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
-            const combined = [...wishes, ...localData].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            
+            // Masukkan juga nilai Likes luar talian ke senarai paparan tempatan
+            let localLikes = JSON.parse(localStorage.getItem('smk_kanowit_likes') || '{}');
+            
+            const combined = [...wishes, ...localData].map(wish => {
+                if (localLikes[wish.id]) {
+                    wish.likes = (wish.likes || 0) + localLikes[wish.id];
+                }
+                return wish;
+            }).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            
             renderWishes(combined);
         }
 
