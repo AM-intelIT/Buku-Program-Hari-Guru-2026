@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap');
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -67,7 +67,6 @@
             <!-- Badges -->
             <div class="flex justify-center items-center gap-4 mb-4">
                 <span class="bg-blue-800/80 backdrop-blur text-xs font-semibold px-3 py-1 rounded-full border border-blue-700 uppercase tracking-wider">BUKU PROGRAM DIGITAL</span>
-               
             </div>
 
             <!-- Main Title -->
@@ -143,21 +142,18 @@
                 </button>
             </div>
             
-            <!-- Poster Display Frame -->
+            <!-- Poster Display Frame with triple-fallback (guru.png -> poster_hr_guru.png -> Unsplash) -->
             <div class="relative bg-slate-950/5 rounded-2xl overflow-hidden p-2 border border-slate-200 transition-all duration-500" id="poster-frame">
                 <img src="guru.png" 
                      alt="Poster Hari Guru SMK Kanowit 2026" 
                      class="w-full h-auto mx-auto rounded-xl shadow-md transition-all duration-500 max-h-[700px] object-contain"
                      id="poster-img"
-                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80'; document.getElementById('poster-error-msg').classList.remove('hidden');">
+                     onerror="this.onerror=null; this.src='poster_hr_guru.png'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80'; document.getElementById('poster-error-msg').classList.remove('hidden');}">
                 
                 <!-- Fallback Info Message in case of failure -->
                 <div id="poster-error-msg" class="hidden absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center text-center p-6 text-white">
-                    
                     <i class="fas fa-file-image text-5xl text-teal-400 mb-4 animate-bounce"></i>
-                   <!-- <p class="font-bold text-lg">Paparan Poster Gantian</p>
-                    <p class="text-sm text-slate-300 max-w-md mt-2">Sistem tidak dapat memuatkan imej tempatan 'poster_hr_guru.png' secara terus. Walau bagaimanapun, semua maklumat poster telah diintegrasikan sepenuhnya ke dalam tab Aturcara dan Info.</p>
-              -->  </div>
+                </div>
             </div>
 
             <!-- Poster Metadata Card -->
@@ -348,16 +344,10 @@
                     <span class="absolute bottom-4 right-4 text-slate-700 text-6xl">”</span>
                     
                     <p class="text-slate-250 leading-relaxed font-medium">
-                        Bahawasanya kami, 
-                        <br>guru-guru negara Malaysia,
-                         <br>dengan ini berikrar,
-                         <br>nmendukung terus cita-cita kami <br>terhadap tugas kami,
-                         <br>dan menyatakan keyakinan kami <br>pada cita-cita murni pekerjaan kami.
+                        Bahawasanya kami, <br>guru-guru negara Malaysia, <br>dengan ini berikrar, <br>mendukung terus cita-cita kami terhadap tugas kami, <br>dan menyatakan keyakinan kami pada cita-cita murni pekerjaan kami.
                     </p>
                     <p class="text-slate-250 leading-relaxed font-medium">
-                        Kami akan berbakti <br>kepada masyarakat dan negara kami. 
-                         <br>Kami sentiasa menjunjung Perlembagaan negara, 
-                         <br>kami mengamalkan prinsip-prinsip Rukun Negara <br>pada setiap masa.
+                        Kami akan berbakti kepada masyarakat dan negara kami. <br>Kami sentiasa menjunjung Perlembagaan negara, <br>kami mengamalkan prinsip-prinsip Rukun Negara pada setiap masa.
                     </p>
                 </div>
 
@@ -463,10 +453,15 @@ SEDIA MENABUR BAKTI!
 
         <!-- TAB: WALL OF WISHES (DINDING UCAPAN) -->
         <section id="tab-ucapan" class="tab-content glass-morphism p-6 rounded-3xl premium-shadow border-t-8 border-teal-600">
-            <div class="text-center mb-8">
+            <div class="text-center mb-6">
                 <i class="fas fa-heart text-4xl text-rose-500 mb-3 animate-pulse"></i>
                 <h3 class="text-2xl font-bold text-slate-900 serif-title">WALL OF WISHES</h3>
                 <p class="text-sm text-slate-500">Tinggalkan kata-kata penghargaan dan ucapan terima kasih kreatif anda di sini.</p>
+                
+                <!-- Connection Status Indicator -->
+                <div class="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600" id="db-status-badge">
+                    <span class="w-2 h-2 rounded-full bg-slate-400 animate-pulse"></span> Menyambung ke awan...
+                </div>
             </div>
 
             <!-- Submit Wish Form -->
@@ -506,7 +501,7 @@ SEDIA MENABUR BAKTI!
                 </h4>
                 
                 <div id="wishes-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Default Hardcoded/Initial Wishes -->
+                    <!-- Loaded dynamically from Firestore -->
                 </div>
             </div>
         </section>
@@ -589,19 +584,48 @@ SEDIA MENABUR BAKTI!
         </div>
     </footer>
 
-    <!-- JavaScript logic -->
-    <script>
-        // Tab switching logic
+    <!-- Firebase SDK & Application Logic (ES Modules) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global state and configurations
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'smk-kanowit-hari-guru-2026';
+        let db = null;
+        let auth = null;
+        let useCloud = false;
+        let wishesCollectionPath = null;
+
+        // Default initial wishes (Offline display and default records)
+        let wishes = [
+            { id: "1", author: "Student SMKK", recipient: "Semua Guru", content: "Terima kasih cikgu atas tunjuk ajar dan ketegasan yang mendidik kami menjadi insan berguna!", date: "18 Mei 2026", timestamp: 1779124800000 },
+            { id: "2", author: "AM", recipient: "Semua Guru SMK Kanowit", content: "Selamat Hari Guru! Jasa dan pengorbanan cikgu semua tidak akan kami lupakan. Jasamu dikenang selamanya.", date: "18 Mei 2026", timestamp: 1779128400000 }
+        ];
+
+        // Safe initialization of Firebase config block
+        try {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+                const firebaseConfig = JSON.parse(__firebase_config);
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                // RULE 1: Ensure strict standardized collection paths
+                wishesCollectionPath = collection(db, 'artifacts', appId, 'public', 'data', 'wishes');
+                useCloud = true;
+            }
+        } catch (e) {
+            console.warn("Sistem gagal menyambung ke Firebase. Mod Simpanan Tempatan diaktifkan.", e);
+        }
+
+        // Navigation Tab Switcher
         function showTab(tabId) {
-            // Hide all content blocks
             const contents = document.querySelectorAll('.tab-content');
             contents.forEach(content => content.classList.remove('active'));
 
-            // Show target content block
             const target = document.getElementById(tabId);
-            target.classList.add('active');
+            if (target) target.classList.add('active');
 
-            // Update navigation tab styling
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => {
                 btn.classList.remove('active');
@@ -609,18 +633,16 @@ SEDIA MENABUR BAKTI!
                 btn.classList.remove('text-white');
             });
 
-            // Highlight the active button
             const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabId));
             if (activeBtn) {
                 activeBtn.classList.add('active');
                 activeBtn.classList.remove('text-slate-600');
             }
             
-            // Auto scroll slightly to highlight the active view
             window.scrollTo({ top: 120, behavior: 'smooth' });
         }
 
-        // Poster zoom toggle
+        // Zoom Image Toggle
         let isZoomed = false;
         function toggleZoom() {
             const frame = document.getElementById('poster-frame');
@@ -643,7 +665,7 @@ SEDIA MENABUR BAKTI!
             }
         }
 
-        // Live Countdown Clock (Event: 19 May 2026 at 07:30 AM)
+        // Live Countdown Clock
         function updateCountdown() {
             const eventDate = new Date('May 19, 2026 07:30:00').getTime();
             const now = new Date().getTime();
@@ -673,29 +695,21 @@ SEDIA MENABUR BAKTI!
             const totalMins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const totalSecs = Math.floor((diff % (1000 * 60)) / 1000);
 
-            hours.innerText = totalHours < 10 ? '0' + totalHours : totalHours;
-            mins.innerText = totalMins < 10 ? '0' + totalMins : totalMins;
-            secs.innerText = totalSecs < 10 ? '0' + totalSecs : totalSecs;
+            if (hours) hours.innerText = totalHours < 10 ? '0' + totalHours : totalHours;
+            if (mins) mins.innerText = totalMins < 10 ? '0' + totalMins : totalMins;
+            if (secs) secs.innerText = totalSecs < 10 ? '0' + totalSecs : totalSecs;
         }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
 
-        // Wishes Wall logic (Saved in-memory for live demo/usage)
-        let wishes = [
-            { id: 1, author: "Student SMKK", recipient: "Semua Guru", content: "Terima kasih cikgu atas tunjuk ajar dan ketegasan yang mendidik kami menjadi insan berguna!", date: "18 Mei 2026" },
-            { id: 2, author: "AM", recipient: "Semua Guru SMK Kanowit", content: "Selamat Hari Guru! Jasa dan pengorbanan cikgu semua tidak akan kami lupakan. Jasamu dikenang selamanya.", date: "18 Mei 2026" }
-           
-        ];
-
-        function renderWishes() {
+        // Render Wishes list into DOM layout safely
+        function renderWishes(listToRender = wishes) {
             const container = document.getElementById('wishes-list');
             const countEl = document.getElementById('wish-count');
             
             if (!container) return;
             container.innerHTML = '';
-            countEl.innerText = wishes.length;
+            countEl.innerText = listToRender.length;
 
-            wishes.slice().reverse().forEach(wish => {
+            listToRender.forEach(wish => {
                 const card = document.createElement('div');
                 card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-all";
                 card.innerHTML = `
@@ -718,50 +732,157 @@ SEDIA MENABUR BAKTI!
             });
         }
 
-        function submitWish(event) {
+        // Handshake validation: Submit Wish through Cloud Database or local disk storage
+        async function submitWish(event) {
             event.preventDefault();
             
             const author = document.getElementById('wish-author').value.trim();
             const recipient = document.getElementById('wish-recipient').value.trim();
             const content = document.getElementById('wish-content').value.trim();
-            const statusBox = document.getElementById('status-box');
 
             if (!author || !recipient || !content) return;
 
-            // Generate today's date
-            const today = "18 Mei 2026";
-
-            // Push to local list
-            wishes.push({
-                id: Date.now(),
+            const today = "19 Mei 2026";
+            const newWish = {
                 author: author,
                 recipient: recipient,
                 content: content,
-                date: today
-            });
+                date: today,
+                timestamp: Date.now()
+            };
 
-            // Show success message
-            statusBox.innerText = `Ucapan anda untuk "${recipient}" telah berjaya dihantar ke dinding ucapan!`;
-            statusBox.className = "mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300 bg-emerald-50 text-emerald-800 border border-emerald-200 block";
-            
-            // Clear fields
+            // Rule 3 Verification: Verify authenticated user is present before writing
+            if (useCloud && auth && auth.currentUser) {
+                try {
+                    await addDoc(wishesCollectionPath, newWish);
+                    showStatusMessage(`Ucapan anda untuk "${recipient}" telah berjaya dihantar secara langsung!`, true);
+                } catch (err) {
+                    console.error("Gagal menulis ke pangkalan data awan:", err);
+                    saveToLocalStorage(newWish);
+                }
+            } else {
+                saveToLocalStorage(newWish);
+            }
+
+            // Clear inputs
             document.getElementById('wish-author').value = '';
             document.getElementById('wish-recipient').value = '';
             document.getElementById('wish-content').value = '';
+        }
 
-            // Re-render wishes
-            renderWishes();
+        // Fallback Storage Array
+        function saveToLocalStorage(newWish) {
+            let localData = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
+            localData.push({ id: Date.now().toString(), ...newWish });
+            localStorage.setItem('smk_kanowit_wishes', JSON.stringify(localData));
+            
+            const combined = [...wishes, ...localData].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            renderWishes(combined);
+            showStatusMessage(`Ucapan anda untuk "${newWish.recipient}" disimpan pada memori peranti tempatan.`, true);
+        }
 
-            // Auto-hide status message after 4 seconds
+        // Safe Status Messages (Zero Alerts)
+        function showStatusMessage(msg, isSuccess) {
+            const statusBox = document.getElementById('status-box');
+            if (!statusBox) return;
+
+            statusBox.innerText = msg;
+            statusBox.className = isSuccess 
+                ? "mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300 bg-emerald-50 text-emerald-800 border border-emerald-200 block"
+                : "mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300 bg-red-50 text-red-800 border border-red-200 block";
+            
             setTimeout(() => {
                 statusBox.className = "hidden";
-            }, 4000);
+            }, 5000);
         }
 
-        // Initialize state
-        window.onload = function() {
-            renderWishes();
+        // Connection status update
+        function updateConnectionBadge(status) {
+            const badge = document.getElementById('db-status-badge');
+            if (!badge) return;
+
+            if (status === 'cloud') {
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> 📡 Bersambung ke Awan Masa-Nyata`;
+                badge.className = "inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100";
+            } else {
+                badge.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span> 💾 Mod Simpanan Tempatan`;
+                badge.className = "inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100";
+            }
         }
+
+        // MANDATORY RULE 3: Auth Before Queries Aligned Execution Workflow
+        async function initApp() {
+            window.showTab = showTab;
+            window.toggleZoom = toggleZoom;
+            window.submitWish = submitWish;
+
+            // Start countdown
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+            if (useCloud) {
+                // Wait for the Auth state to resolve completely first
+                const initAuth = async () => {
+                    try {
+                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } else {
+                            await signInAnonymously(auth);
+                        }
+                    } catch (err) {
+                        console.error("Gagal melog masuk pengguna secara selamat:", err);
+                        loadLocalWishesAsFallback();
+                    }
+                };
+
+                // Explicitly await the authentication process
+                await initAuth();
+
+                // Listen to Auth changes, then activate Snapshot Listener
+                onAuthStateChanged(auth, (user) => {
+                    if (!user) {
+                        loadLocalWishesAsFallback();
+                        return;
+                    }
+
+                    updateConnectionBadge('cloud');
+
+                    // Safe realtime data subscription inside user authenticated session block
+                    onSnapshot(wishesCollectionPath, (snapshot) => {
+                        let cloudWishesList = [];
+                        snapshot.forEach(doc => {
+                            cloudWishesList.push({ id: doc.id, ...doc.data() });
+                        });
+                        
+                        let merged = [...wishes];
+                        cloudWishesList.forEach(cw => {
+                            if (!merged.some(m => m.id === cw.id)) {
+                                merged.push(cw);
+                            }
+                        });
+
+                        // RULE 2: Sort safely inside JS memory block
+                        merged.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                        renderWishes(merged);
+                    }, (error) => {
+                        console.error("Ralat pemantauan masa-nyata Firestore:", error);
+                        loadLocalWishesAsFallback();
+                    });
+                });
+            } else {
+                loadLocalWishesAsFallback();
+            }
+        }
+
+        function loadLocalWishesAsFallback() {
+            updateConnectionBadge('local');
+            const localData = JSON.parse(localStorage.getItem('smk_kanowit_wishes') || '[]');
+            const combined = [...wishes, ...localData].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            renderWishes(combined);
+        }
+
+        // Run application sequence
+        initApp();
     </script>
 </body>
 </html>
