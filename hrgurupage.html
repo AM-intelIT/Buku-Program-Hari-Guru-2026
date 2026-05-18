@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Program Digital Hari Guru SMK Kanowit 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+        }
+
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .premium-shadow {
+            box-shadow: 0 20px 40px -15px rgba(30, 41, 59, 0.08);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0d9488 100%);
+            color: white;
+            box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-24 text-slate-800">
+
+    <!-- Top Decorative Bar -->
+    <div class="h-2 bg-gradient-to-r from-blue-900 via-teal-500 to-orange-400 w-full"></div>
+
+    <!-- Header Section -->
+    <header class="relative overflow-hidden bg-slate-900 text-white py-12 px-6 text-center shadow-xl">
+        <!-- Abstract Background Shapes -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-teal-400 blur-3xl"></div>
+            <div class="absolute -bottom-10 -right-10 w-60 h-60 rounded-full bg-blue-500 blur-3xl"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <!-- Badges -->
+            <div class="flex justify-center items-center gap-4 mb-4">
+                <span class="bg-blue-800/80 backdrop-blur text-xs font-semibold px-3 py-1 rounded-full border border-blue-700 uppercase tracking-wider">SMK Kanowit</span>
+                <span class="bg-teal-800/80 backdrop-blur text-xs font-semibold px-3 py-1 rounded-full border border-teal-700 uppercase tracking-wider">Edisi 2026</span>
+            </div>
+
+            <!-- Main Title -->
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 serif-title bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">
+                SAMBUTAN HARI GURU
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-light tracking-widest text-teal-300 mb-6">SMK KANOWIT 2026</h2>
+            
+            <!-- Theme Card -->
+            <div class="inline-flex flex-col items-center justify-center bg-white/5 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/10 max-w-md">
+                <span class="text-xs text-teal-400 font-semibold tracking-widest uppercase mb-1">TEMA HARI GURU</span>
+                <p class="text-lg md:text-xl font-bold italic text-orange-200">"Guru Bitara Nadi Negara"</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto px-4 mt-8">
+        
+        <!-- Live Countdown Widget -->
+        <div id="countdown-card" class="mb-8 glass-morphism p-5 rounded-2xl premium-shadow border-l-4 border-teal-500 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider">Detik Acara Kemuncak</h4>
+                <p class="text-base font-bold text-slate-800">Selasa, 19 Mei 2026 • 7.30 Pagi</p>
+            </div>
+            <div class="flex gap-3 text-center">
+                <div class="bg-slate-900/10 px-3 py-2 rounded-lg min-w-[60px]">
+                    <div id="cd-hours" class="text-xl font-extrabold text-slate-850">00</div>
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Jam</div>
+                </div>
+                <div class="bg-slate-900/10 px-3 py-2 rounded-lg min-w-[60px]">
+                    <div id="cd-mins" class="text-xl font-extrabold text-slate-850">00</div>
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Minit</div>
+                </div>
+                <div class="bg-slate-900/10 px-3 py-2 rounded-lg min-w-[60px]">
+                    <div id="cd-secs" class="text-xl font-extrabold text-slate-850">00</div>
+                    <div class="text-[10px] uppercase font-bold text-slate-500">Saat</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sticky Navigation Bar -->
+        <nav class="flex overflow-x-auto gap-2 mb-8 sticky top-4 z-50 bg-white/90 p-2 rounded-2xl shadow-lg backdrop-blur scrollbar-none border border-slate-200/50">
+            <button onclick="showTab('tab-poster')" class="nav-btn active flex-none px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 flex items-center">
+                <i class="fas fa-image mr-2 text-base"></i>Poster
+            </button>
+            <button onclick="showTab('tab-aturcara')" class="nav-btn flex-none px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-600 hover:bg-slate-100 flex items-center">
+                <i class="fas fa-calendar-alt mr-2 text-base"></i>Aturcara
+            </button>
+            <button onclick="showTab('tab-ikrar')" class="nav-btn flex-none px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-600 hover:bg-slate-100 flex items-center">
+                <i class="fas fa-hand-paper mr-2 text-base"></i>Ikrar
+            </button>
+            <button onclick="showTab('tab-lagu')" class="nav-btn flex-none px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-600 hover:bg-slate-100 flex items-center">
+                <i class="fas fa-music mr-2 text-base"></i>Lirik Lagu
+            </button>
+            <button onclick="showTab('tab-ucapan')" class="nav-btn flex-none px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-600 hover:bg-slate-100 flex items-center">
+                <i class="fas fa-heart mr-2 text-base"></i>Dinding Ucapan
+            </button>
+            <button onclick="showTab('tab-info')" class="nav-btn flex-none px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 text-slate-600 hover:bg-slate-100 flex items-center">
+                <i class="fas fa-info-circle mr-2 text-base"></i>Pakaian & Info
+            </button>
+        </nav>
+
+        <!-- TAB: POSTER -->
+        <section id="tab-poster" class="tab-content active glass-morphism p-6 rounded-3xl premium-shadow border-t-8 border-teal-600">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-slate-900 serif-title">Poster Rasmi Sambutan</h3>
+                    <p class="text-sm text-slate-500">Imej poster penuh maklumat aturcara dan pakaian</p>
+                </div>
+                <button onclick="toggleZoom()" class="bg-teal-50 hover:bg-teal-100 text-teal-700 px-4 py-2 rounded-xl text-sm font-bold transition flex items-center gap-2">
+                    <i id="zoom-icon" class="fas fa-expand"></i> <span id="zoom-text">Besarkan Poster</span>
+                </button>
+            </div>
+            
+            <!-- Poster Display Frame -->
+            <div class="relative bg-slate-950/5 rounded-2xl overflow-hidden p-2 border border-slate-200 transition-all duration-500" id="poster-frame">
+                <img src="poster_hr_guru.png" 
+                     alt="Poster Hari Guru SMK Kanowit 2026" 
+                     class="w-full h-auto mx-auto rounded-xl shadow-md transition-all duration-500 max-h-[700px] object-contain"
+                     id="poster-img"
+                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1200&q=80'; document.getElementById('poster-error-msg').classList.remove('hidden');">
+                
+                <!-- Fallback Info Message in case of failure -->
+                <div id="poster-error-msg" class="hidden absolute inset-0 bg-slate-900/90 flex flex-col items-center justify-center text-center p-6 text-white">
+                    <i class="fas fa-file-image text-5xl text-teal-400 mb-4 animate-bounce"></i>
+                    <p class="font-bold text-lg">Paparan Poster Gantian</p>
+                    <p class="text-sm text-slate-300 max-w-md mt-2">Sistem tidak dapat memuatkan imej tempatan 'poster_hr_guru.png' secara terus. Walau bagaimanapun, semua maklumat poster telah diintegrasikan sepenuhnya ke dalam tab Aturcara dan Info.</p>
+                </div>
+            </div>
+
+            <!-- Poster Metadata Card -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                <div class="bg-white/60 p-4 rounded-2xl border border-slate-100 text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Tarikh</span>
+                    <p class="text-base font-bold text-slate-800 mt-1">19 Mei 2026</p>
+                </div>
+                <div class="bg-white/60 p-4 rounded-2xl border border-slate-100 text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Hari</span>
+                    <p class="text-base font-bold text-slate-800 mt-1">Selasa</p>
+                </div>
+                <div class="bg-white/60 p-4 rounded-2xl border border-slate-100 text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Masa</span>
+                    <p class="text-base font-bold text-slate-800 mt-1">7.30 - 9.30 Pagi</p>
+                </div>
+                <div class="bg-white/60 p-4 rounded-2xl border border-slate-100 text-center">
+                    <span class="text-xs font-semibold text-slate-500 uppercase">Pakaian</span>
+                    <p class="text-base font-bold text-slate-800 mt-1">Tradisional</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: ATURCARA -->
+        <section id="tab-aturcara" class="tab-content glass-morphism p-6 rounded-3xl premium-shadow border-t-8 border-teal-600">
+            <div class="text-center mb-8">
+                <span class="bg-teal-100 text-teal-800 text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Masa Standard Malaysia</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-2 serif-title">Tentatif Program Sambutan</h3>
+                <p class="text-sm text-slate-500">Rancangan perjalanan majlis bermula jam 7.30 Pagi sehingga tamat.</p>
+            </div>
+            
+            <div class="relative border-l-2 border-teal-200 ml-4 md:ml-32 space-y-8 pb-4">
+                <!-- Timeline Item 1 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">07.00 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Ketibaan</h4>
+                        <p class="text-sm text-slate-500 mt-1">Ketibaan tetamu jemputan, para pelajar, serta pendaftaran kehadiran guru-guru SMK Kanowit.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">07.10 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Majlis Bermula & Lagu Rasmi</h4>
+                        <p class="text-sm text-slate-500 mt-1 mb-2">Ketibaan rasmi Tuan Pengetua diiringi barisan pentadbir sekolah.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
+                            <span class="bg-slate-50 text-slate-700 text-xs px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-1.5">
+                                <i class="fas fa-flag text-red-500"></i> Lagu Negaraku
+                            </span>
+                            <span class="bg-slate-50 text-slate-700 text-xs px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-1.5">
+                                <i class="fas fa-feather text-orange-500"></i> Ibu Pertiwiku
+                            </span>
+                            <span class="bg-slate-50 text-slate-700 text-xs px-3 py-1.5 rounded-xl border border-slate-100 flex items-center gap-1.5">
+                                <i class="fas fa-pray text-blue-500"></i> Bacaan Doa
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">07.20 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Ucapan Pembukaan</h4>
+                        <ul class="list-disc list-inside space-y-1 text-sm text-slate-600 mt-2">
+                            <li>Ucapan alu-aluan wakil Ketua Pelajar SMK Kanowit.</li>
+                            <li>Ucapan perasmian oleh Pengetua SMK Kanowit.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">07.35 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Bacaan Perutusan Rasmi</h4>
+                        <div class="space-y-2 mt-2">
+                            <div class="bg-teal-50/50 p-2.5 rounded-xl border border-teal-100/50 flex items-start gap-2.5">
+                                <i class="fas fa-envelope-open-text text-teal-600 mt-1"></i>
+                                <p class="text-xs text-slate-700">Perutusan Ketua Pengarah Pendidikan Malaysia (KPPM)</p>
+                            </div>
+                            <div class="bg-teal-50/50 p-2.5 rounded-xl border border-teal-100/50 flex items-start gap-2.5">
+                                <i class="fas fa-envelope-open-text text-teal-600 mt-1"></i>
+                                <p class="text-xs text-slate-700">Perutusan Menteri Pendidikan Malaysia (KPM)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">07.45 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Ikrar & Upacara Simbolik</h4>
+                        <ul class="list-disc list-inside space-y-1 text-sm text-slate-600 mt-2">
+                            <li class="font-medium text-teal-800">Ikrar Hari Guru (Diketuai oleh PK HEM, En. Balintian Anak Nobert Jubit)</li>
+                            <li>Upacara Pemotongan Kek Hari Guru 2026</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 6 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">07.55 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Persembahan & Penghargaan</h4>
+                        <ul class="list-disc list-inside space-y-1 text-sm text-slate-600 mt-2">
+                            <li>Acara persembahan khas daripada wakil guru-guru.</li>
+                            <li>Penyampaian cenderamata khas daripada kelas-kelas.</li>
+                            <li>Penyampaian anugerah & cenderahati buat guru-guru.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 7 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">08.10 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Nyanyian Beramai-ramai</h4>
+                        <p class="text-sm text-slate-500 mt-1">Sesi nyanyian patriotik yang menyuntik semangat warga pendidik:</p>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <span class="bg-blue-50 text-blue-700 text-xs px-3 py-1 rounded-full border border-blue-100 font-semibold">Kami Guru Malaysia</span>
+                            <span class="bg-orange-50 text-orange-700 text-xs px-3 py-1 rounded-full border border-orange-100 font-semibold">Pendidik Bumi Kenyalang</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 8 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">08.20 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Lagu Sekolah</h4>
+                        <p class="text-sm text-slate-500 mt-1">Nyanyian penutup Lagu Sekolah "Wawasan Sejati".</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 9 -->
+                <div class="relative text-teal-600">
+                    <div class="absolute -left-1.5 top-1.5 bg-teal-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-teal-800 text-right w-24 text-sm md:text-base">08.25 Pagi</div>
+                    <div class="ml-6 bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                        <h4 class="font-bold text-slate-800">Jamuan Khas</h4>
+                        <p class="text-sm text-slate-500 mt-1">Majlis jamuan makan khas sempena Hari Guru bertempat di bilik yang telah dikhaskan.</p>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 10 -->
+                <div class="relative">
+                    <div class="absolute -left-1.5 top-1.5 bg-orange-500 w-3.5 h-3.5 rounded-full border-4 border-white shadow animate-ping"></div>
+                    <div class="absolute -left-1.5 top-1.5 bg-orange-600 w-3.5 h-3.5 rounded-full border-4 border-white shadow"></div>
+                    <div class="md:absolute md:-left-32 md:top-1 font-extrabold text-orange-600 text-right w-24 text-sm md:text-base">09.30 Pagi</div>
+                    <div class="ml-6 bg-orange-50 p-4 rounded-2xl border border-orange-150 shadow-sm">
+                        <h4 class="font-bold text-orange-800 flex items-center gap-2">
+                            <span>Bersurai</span>
+                            <span class="bg-orange-200 text-orange-900 text-[10px] px-2 py-0.5 rounded-full font-bold">Acara Tamat</span>
+                        </h4>
+                        <p class="text-sm text-orange-700/80 mt-1">Majlis tamat dengan rasminya. Sesi fotografi dan bersurai kembali ke kelas masing-masing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: IKRAR -->
+        <section id="tab-ikrar" class="tab-content glass-morphism p-8 rounded-3xl premium-shadow border-t-8 border-teal-600 text-center relative overflow-hidden">
+            <!-- Background Watermark -->
+            <div class="absolute -bottom-24 -right-24 text-slate-100 text-[180px] pointer-events-none serif-title font-bold opacity-30 select-none">
+                Ikrar
+            </div>
+
+            <div class="relative z-10">
+                <i class="fas fa-hand-paper text-5xl text-teal-600 mb-6"></i>
+                <h3 class="text-2xl font-bold text-slate-900 mb-2 serif-title">Ikrar Hari Guru Malaysia</h3>
+                <p class="text-sm text-slate-500 mb-8 max-w-lg mx-auto">Sila angkat tangan kanan anda dan ikuti lafaz ikrar yang mulia ini.</p>
+                
+                <div class="max-w-2xl mx-auto bg-slate-900 text-teal-100 p-8 rounded-3xl text-lg leading-relaxed shadow-inner border border-slate-800 space-y-6 italic relative">
+                    <!-- Quote Mark Icons -->
+                    <span class="absolute top-4 left-4 text-slate-700 text-6xl">“</span>
+                    <span class="absolute bottom-4 right-4 text-slate-700 text-6xl">”</span>
+                    
+                    <p class="text-slate-250 leading-relaxed font-medium">
+                        Bahawasanya kami, guru-guru negara Malaysia dengan ini berikrar, mendukung terus cita-cita kami terhadap tugas kami dan menyatakan keyakinan kami pada cita-cita murni pekerjaan kami.
+                    </p>
+                    <p class="text-slate-250 leading-relaxed font-medium">
+                        Kami akan berbakti kepada masyarakat dan negara kami. Kami sentiasa menjunjung Perlembagaan negara, kami mengamalkan prinsip-prinsip Rukun Negara pada setiap masa.
+                    </p>
+                </div>
+
+                <div class="mt-10 pt-8 border-t border-slate-200 max-w-md mx-auto">
+                    <span class="text-xs font-bold text-teal-700 uppercase tracking-widest block mb-1">Ketua Lafaz Ikrar</span>
+                    <p class="text-xl font-extrabold text-slate-900">En. Balintian Anak Nobert Jubit</p>
+                    <p class="text-sm text-slate-500 font-medium italic mt-0.5">Penolong Kanan Hal Ehwal Murid (PK HEM)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: LAGU -->
+        <section id="tab-lagu" class="tab-content glass-morphism p-6 rounded-3xl premium-shadow border-t-8 border-teal-600">
+            <div class="text-center mb-8">
+                <i class="fas fa-music text-4xl text-teal-600 mb-3"></i>
+                <h3 class="text-2xl font-bold text-slate-900 serif-title">Lirik Lagu Rasmi Hari Guru</h3>
+                <p class="text-sm text-slate-500">Mari bersama-sama mengalunkan melodi kehormatan para pendidik.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Song 1 -->
+                <div class="bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-6 rounded-2xl shadow-md border border-blue-800 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-white/20 pb-4 mb-4">
+                            <h4 class="text-lg font-bold text-teal-300">1. Kami Guru Malaysia</h4>
+                            <span class="bg-teal-400/20 text-teal-300 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Lagu Rasmi</span>
+                        </div>
+                        <pre class="whitespace-pre-wrap font-sans text-sm text-blue-100 leading-relaxed text-center italic">
+Kami Guru Malaysia
+Berikrar dan berjanji
+Mendidik dan memimpin
+Putra putri negara kita
+
+Pada Seri Paduka
+Kami tumpahkan setia
+Rukun Negara kita
+Panduan hidup kami semua
+
+Di bidang pembangunan
+Kami tetap bersama
+Membantu, membina
+Negara yang tercinta
+
+Amanah yang diberi
+Kami tak persiakan
+Apa yang kami janji
+Tunai tetap kami tunaikan
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Song 2 -->
+                <div class="bg-gradient-to-br from-orange-800 to-red-950 text-white p-6 rounded-2xl shadow-md border border-orange-700 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center border-b border-white/20 pb-4 mb-4">
+                            <h4 class="text-lg font-bold text-amber-300">2. Pendidik Bumi Kenyalang</h4>
+                            <span class="bg-amber-400/20 text-amber-300 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Lagu Sarawak</span>
+                        </div>
+                        <pre class="whitespace-pre-wrap font-sans text-sm text-orange-100 leading-relaxed text-center italic">
+Pendidik Bumi Kenyalang
+Berdiri teguh di pentas dunia
+Mendidik anak bangsa tercinta
+Mencapai cita-cita mulia
+
+<strong class="text-amber-300 not-italic font-bold">[Korus]</strong>
+Pendidik Bumi Kenyalang
+Berbakti tanpa rasa jemu
+Mencurah bakti dan tenaga
+Demi masa depan negara
+
+Kita adalah obor penyuluh
+Menerangi kegelapan malam
+Membina modal insan cemerlang
+Di Bumi Kenyalang yang gemilang
+                        </pre>
+                    </div>
+                </div>
+
+                <!-- Song 3 (Full Width Below) -->
+                <div class="md:col-span-2 bg-gradient-to-br from-slate-800 to-teal-950 text-white p-6 rounded-2xl shadow-md border border-teal-800">
+                    <div class="flex justify-between items-center border-b border-white/20 pb-4 mb-4">
+                        <h4 class="text-lg font-bold text-emerald-300">3. Lagu Sekolah (Wawasan Sejati)</h4>
+                        <span class="bg-emerald-400/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded font-bold uppercase">Lagu Sekolah</span>
+                    </div>
+                    <pre class="whitespace-pre-wrap font-sans text-sm text-teal-100 leading-relaxed text-center italic max-w-xl mx-auto">
+SMK KANOWIT TERCINTA, MEDAN ILMU DITIMBA
+INDAH MEGA PENUH CERIA, WARGANYA BERBILANG BANGSA
+
+KAMI PUNYA WAWASAN MULIA
+SEKOLAH PREMIER IMPIAN SEMUA
+KEUNGGULAN TERUS DICIPTA, BERWATAK DAN BERBUDAYA
+BAKAT DIASAH JIWA SUCI
+
+NILAI MURNI DIAMALKAN, BIJAKSANA PEKERTI MULIA
+ILMU PENUH DI DADA, KAMI BERSATU HATI
+
+KECEMERLANGAN MILIK KAMI, KUAT AZAM JATI DIRI
+SEDIA MENABUR BAKTI!
+                    </pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: WALL OF WISHES (DINDING UCAPAN) -->
+        <section id="tab-ucapan" class="tab-content glass-morphism p-6 rounded-3xl premium-shadow border-t-8 border-teal-600">
+            <div class="text-center mb-8">
+                <i class="fas fa-heart text-4xl text-rose-500 mb-3 animate-pulse"></i>
+                <h3 class="text-2xl font-bold text-slate-900 serif-title">Dinding Ucapan Hari Guru</h3>
+                <p class="text-sm text-slate-500">Tinggalkan kata-kata penghargaan dan ucapan terima kasih kreatif anda di sini.</p>
+            </div>
+
+            <!-- Submit Wish Form -->
+            <form id="wish-form" onsubmit="submitWish(event)" class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Nama / Kelas</label>
+                        <input type="text" id="wish-author" required placeholder="Contoh: Danish (Tingkatan 5 Bestari)" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Didedikasikan Kepada</label>
+                        <input type="text" id="wish-recipient" required placeholder="Contoh: Cikgu Sarah / Semua Guru" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Ucapan Anda</label>
+                    <textarea id="wish-content" required rows="3" placeholder="Tuliskan ucapan ikhlas anda buat guru tercinta..." 
+                              class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-teal-600 hover:bg-teal-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition flex items-center gap-2 shadow-md">
+                        <i class="fas fa-paper-plane"></i> Hantar Ucapan
+                    </button>
+                </div>
+            </form>
+
+            <!-- Real-time Status Message (Custom Modal-style Notification) -->
+            <div id="status-box" class="hidden mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300"></div>
+
+            <!-- Wishes Container -->
+            <div>
+                <h4 class="text-sm font-bold text-slate-600 mb-4 flex items-center gap-2">
+                    <i class="fas fa-comments text-teal-600"></i>
+                    <span>Koleksi Ucapan Terkini (<span id="wish-count">0</span>)</span>
+                </h4>
+                
+                <div id="wishes-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Default Hardcoded/Initial Wishes -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: INFO & PAKAIAN TRADISIONAL -->
+        <section id="tab-info" class="tab-content glass-morphism p-6 rounded-3xl premium-shadow border-t-8 border-teal-600">
+            <div class="text-center mb-8">
+                <i class="fas fa-info-circle text-4xl text-teal-600 mb-3"></i>
+                <h3 class="text-2xl font-bold text-slate-900 serif-title">Maklumat Tambahan & Tema Pakaian</h3>
+                <p class="text-sm text-slate-500">Garis panduan pakaian tradisional dan peta lokasi dewan.</p>
+            </div>
+
+            <!-- Dress Code Feature Grid -->
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-2xl border border-orange-200/60 mb-8 flex flex-col md:flex-row items-center gap-6">
+                <div class="text-5xl text-orange-600 flex-none bg-white p-4 rounded-full shadow-sm">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-orange-900 flex items-center gap-2">
+                        <span>TEMA PAKAIAN: TRADISIONAL</span>
+                        <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded font-extrabold uppercase">Wajib</span>
+                    </h4>
+                    <p class="text-sm text-orange-800 mt-1 leading-relaxed">
+                        Semua guru dan tetamu digalakkan memakai pakaian tradisional kaum masing-masing (seperti Baju Melayu, Kebaya, Cheongsam, Sari, Pakaian Tradisional Iban/Orang Ulu/Bidayuh) bagi memeriahkan warna-warni budaya sambutan kali ini.
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Location Info -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                    <h4 class="font-bold text-slate-800 flex items-center gap-2 mb-3">
+                        <i class="fas fa-map-marked-alt text-teal-600"></i> Location & Venue
+                    </h4>
+                    <p class="text-sm text-slate-600 mb-2 font-semibold">Dewan Terbuka, SMK Kanowit</p>
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                        Pentas utama sambutan Hari Guru 2026. Sila pastikan barisan murid bersedia di kedudukan yang ditetapkan sebelum jam 7.00 pagi.
+                    </p>
+                </div>
+
+                <!-- Committee Highlights -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm">
+                    <h4 class="font-bold text-slate-800 flex items-center gap-2 mb-3">
+                        <i class="fas fa-users text-teal-600"></i> Jawatankuasa Induk
+                    </h4>
+                    <div class="space-y-2 text-xs text-slate-600">
+                        <div class="flex justify-between border-b border-slate-50 pb-1.5">
+                            <span class="font-semibold text-slate-500">Pengerusi:</span>
+                            <span class="text-slate-800 font-bold">Pengetua SMK Kanowit</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-50 pb-1.5">
+                            <span class="font-semibold text-slate-500">Timbalan Pengerusi:</span>
+                            <span class="text-slate-800 font-bold">Penolong Kanan Pentadbiran</span>
+                        </div>
+                        <div class="flex justify-between border-b border-slate-50 pb-1.5">
+                            <span class="font-semibold text-slate-500">Penyelaras Majlis:</span>
+                            <span class="text-slate-800 font-bold">Majlis Kebajikan Guru & Kakitangan</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Interactive Navigation Float Bar (Mobile optimization) -->
+    <footer class="bg-slate-900 text-white mt-16 py-12 px-6 text-center border-t border-slate-800">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-left">
+                <p class="text-base font-bold text-teal-400">SMK KANOWIT 2026</p>
+                <p class="text-xs text-slate-400 mt-0.5">&copy; 2026 SMK Kanowit. Direka khas untuk sambutan Pendidik Bitara.</p>
+            </div>
+            <div class="flex gap-4">
+                <a href="#" onclick="showTab('tab-poster'); return false;" class="text-slate-400 hover:text-white text-sm font-semibold transition">Poster</a>
+                <span class="text-slate-600">|</span>
+                <a href="#" onclick="showTab('tab-aturcara'); return false;" class="text-slate-400 hover:text-white text-sm font-semibold transition">Aturcara</a>
+                <span class="text-slate-600">|</span>
+                <a href="#" onclick="showTab('tab-ucapan'); return false;" class="text-slate-400 hover:text-white text-sm font-semibold transition">Dinding Ucapan</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript logic -->
+    <script>
+        // Tab switching logic
+        function showTab(tabId) {
+            // Hide all content blocks
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Show target content block
+            const target = document.getElementById(tabId);
+            target.classList.add('active');
+
+            // Update navigation tab styling
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('text-slate-600');
+                btn.classList.remove('text-white');
+            });
+
+            // Highlight the active button
+            const activeBtn = Array.from(buttons).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if (activeBtn) {
+                activeBtn.classList.add('active');
+                activeBtn.classList.remove('text-slate-600');
+            }
+            
+            // Auto scroll slightly to highlight the active view
+            window.scrollTo({ top: 120, behavior: 'smooth' });
+        }
+
+        // Poster zoom toggle
+        let isZoomed = false;
+        function toggleZoom() {
+            const frame = document.getElementById('poster-frame');
+            const img = document.getElementById('poster-img');
+            const icon = document.getElementById('zoom-icon');
+            const txt = document.getElementById('zoom-text');
+
+            if (!isZoomed) {
+                img.style.maxHeight = 'none';
+                frame.classList.add('ring-4', 'ring-teal-500/50');
+                icon.className = 'fas fa-compress';
+                txt.innerText = 'Kecilkan Poster';
+                isZoomed = true;
+            } else {
+                img.style.maxHeight = '700px';
+                frame.classList.remove('ring-4', 'ring-teal-500/50');
+                icon.className = 'fas fa-expand';
+                txt.innerText = 'Besarkan Poster';
+                isZoomed = false;
+            }
+        }
+
+        // Live Countdown Clock (Event: 19 May 2026 at 07:30 AM)
+        function updateCountdown() {
+            const eventDate = new Date('May 19, 2026 07:30:00').getTime();
+            const now = new Date().getTime();
+            const diff = eventDate - now;
+
+            const hours = document.getElementById('cd-hours');
+            const mins = document.getElementById('cd-mins');
+            const secs = document.getElementById('cd-secs');
+            const countdownCard = document.getElementById('countdown-card');
+
+            if (diff <= 0) {
+                if (countdownCard) {
+                    countdownCard.innerHTML = `
+                        <div class="flex items-center gap-3 text-teal-800">
+                            <i class="fas fa-check-circle text-2xl text-teal-600 animate-pulse"></i>
+                            <div>
+                                <h4 class="font-extrabold uppercase tracking-wide text-sm">Majlis Sedang Berlangsung!</h4>
+                                <p class="text-xs text-teal-700 font-medium">Selamat Menyambut Hari Guru 2026 kepada semua pendidik SMK Kanowit!</p>
+                            </div>
+                        </div>
+                    `;
+                }
+                return;
+            }
+
+            const totalHours = Math.floor(diff / (1000 * 60 * 60));
+            const totalMins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const totalSecs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            hours.innerText = totalHours < 10 ? '0' + totalHours : totalHours;
+            mins.innerText = totalMins < 10 ? '0' + totalMins : totalMins;
+            secs.innerText = totalSecs < 10 ? '0' + totalSecs : totalSecs;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Wishes Wall logic (Saved in-memory for live demo/usage)
+        let wishes = [
+            { id: 1, author: "Aiman (Tingkatan 5 Sastera)", recipient: "Cikgu Balintian", content: "Terima kasih Cikgu Balintian atas tunjuk ajar dan ketegasan yang mendidik kami menjadi insan berguna!", date: "18 Mei 2026" },
+            { id: 2, author: "Siti & Kawan-kawan", recipient: "Semua Guru SMK Kanowit", content: "Selamat Hari Guru! Jasa dan pengorbanan cikgu semua tidak akan kami lupakan. Jasamu dikenang selamanya.", date: "18 Mei 2026" },
+            { id: 3, author: "Alumni 2023", recipient: "Cikgu-cikgu Kesayangan", content: "Selamat menyambut hari guru! Sentiasa merindui suasana belajar di SMK Kanowit. Terima kasih atas segalanya!", date: "17 Mei 2026" }
+        ];
+
+        function renderWishes() {
+            const container = document.getElementById('wishes-list');
+            const countEl = document.getElementById('wish-count');
+            
+            if (!container) return;
+            container.innerHTML = '';
+            countEl.innerText = wishes.length;
+
+            wishes.slice().reverse().forEach(wish => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between relative hover:shadow-md transition-all";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start border-b border-slate-50 pb-2 mb-3">
+                            <div>
+                                <span class="text-[10px] font-bold text-rose-500 uppercase tracking-widest block">Kepada</span>
+                                <span class="font-bold text-slate-800 text-sm">${wish.recipient}</span>
+                            </div>
+                            <span class="text-[10px] text-slate-400 font-medium">${wish.date}</span>
+                        </div>
+                        <p class="text-slate-600 text-sm italic leading-relaxed">"${wish.content}"</p>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-50/50 flex items-center justify-between">
+                        <span class="text-xs font-bold text-teal-700">— ${wish.author}</span>
+                        <span class="text-slate-300 text-xs"><i class="fas fa-heart text-rose-400"></i></span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function submitWish(event) {
+            event.preventDefault();
+            
+            const author = document.getElementById('wish-author').value.trim();
+            const recipient = document.getElementById('wish-recipient').value.trim();
+            const content = document.getElementById('wish-content').value.trim();
+            const statusBox = document.getElementById('status-box');
+
+            if (!author || !recipient || !content) return;
+
+            // Generate today's date
+            const today = "18 Mei 2026";
+
+            // Push to local list
+            wishes.push({
+                id: Date.now(),
+                author: author,
+                recipient: recipient,
+                content: content,
+                date: today
+            });
+
+            // Show success message
+            statusBox.innerText = `Ucapan anda untuk "${recipient}" telah berjaya dihantar ke dinding ucapan!`;
+            statusBox.className = "mb-6 p-4 rounded-xl text-sm font-semibold transition-all duration-300 bg-emerald-50 text-emerald-800 border border-emerald-200 block";
+            
+            // Clear fields
+            document.getElementById('wish-author').value = '';
+            document.getElementById('wish-recipient').value = '';
+            document.getElementById('wish-content').value = '';
+
+            // Re-render wishes
+            renderWishes();
+
+            // Auto-hide status message after 4 seconds
+            setTimeout(() => {
+                statusBox.className = "hidden";
+            }, 4000);
+        }
+
+        // Initialize state
+        window.onload = function() {
+            renderWishes();
+        }
+    </script>
+</body>
+</html>
