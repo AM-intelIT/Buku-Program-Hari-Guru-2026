@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broshur Bifold Hari Guru SMK Kanowit 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600;700;800&family=Playfair+Display:ital,wght=0,600;0,700;1,400&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f1f5f9;
+        }
+
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Simulasi Saiz Kertas Cetakan A4 Landskap untuk Bifold */
+        .bifold-page {
+            width: 297mm;
+            height: 210mm;
+            background: white;
+            padding: 12mm 15mm;
+            position: relative;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20mm;
+        }
+
+        /* Garisan Lipatan Tengah (Hanya paparan skrin) */
+        .bifold-page::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, #cbd5e1 15%, #cbd5e1 85%, transparent);
+        }
+
+        .brochure-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        /* Kawalan Cetakan Optimum */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .bifold-page {
+                box-shadow: none;
+                page-break-after: always;
+                margin: 0;
+                width: 297mm;
+                height: 210mm;
+            }
+            .bifold-page::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="py-10 px-4 flex flex-col items-center justify-center gap-6">
+
+    <!-- PANEL KAWALAN (TIDAK DICETAK) -->
+    <div class="no-print bg-slate-900 text-white p-4 rounded-2xl shadow-lg flex flex-wrap gap-4 items-center justify-between w-full max-w-[297mm]">
+        <div>
+            <h1 class="font-bold text-teal-400 text-lg">Mod Cetakan & Muat Turun Broshur</h1>
+            <p class="text-xs text-slate-400">Sila pilih "Save as PDF" dan setkan saiz kertas kepada <b>A4 Layout: Landscape</b> di menu cetakan.</p>
+        </div>
+        <div class="flex gap-2">
+            <button onclick="window.print()" class="bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-xl text-sm font-bold shadow flex items-center gap-2 transition">
+                <i class="fas fa-file-pdf"></i> Simpan / Cetak PDF
+            </button>
+            <button onclick="downloadHTML()" class="bg-slate-800 hover:bg-slate-750 text-slate-200 border border-slate-700 px-4 py-2 rounded-xl text-sm font-bold shadow flex items-center gap-2 transition">
+                <i class="fas fa-download"></i> Muat Turun .HTML
+            </button>
+        </div>
+    </div>
+
+    <!-- BAHAGIAN 1: LUARAN (KANDUNGAN KIRI = KULIT BELAKANG | KANDUNGAN KANAN = KULIT HADAPAN) -->
+    <div class="bifold-page" id="brochure-outer">
+        
+        <!-- PANEL LEFT: KULIT BELAKANG (INFO & PENGHARGAAN) -->
+        <div class="brochure-panel pr-2">
+            <div>
+                <div class="border-b-4 border-teal-600 pb-2 mb-4">
+                    <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wide">Maklumat Tambahan</h3>
+                </div>
+                
+                <!-- Info Pakaian -->
+                <div class="bg-amber-50/80 p-3.5 rounded-xl border border-amber-200/60 mb-4">
+                    <h4 class="text-xs font-bold text-orange-900 uppercase flex items-center gap-1.5 mb-1">
+                        <i class="fas fa-user-tie text-orange-600"></i> Tema Pakaian: Tradisional
+                    </h4>
+                    <p class="text-[11px] text-orange-800 leading-relaxed">
+                        Semua guru dan tetamu digalakkan memakai pakaian tradisional kaum masing-masing bagi memeriahkan warna-warni budaya sambutan kali ini.
+                    </p>
+                </div>
+
+                <!-- Info Lokasi -->
+                <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200/60">
+                    <h4 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 mb-1">
+                        <i class="fas fa-map-marked-alt text-teal-600"></i> Tempat Acara
+                    </h4>
+                    <p class="text-[11px] text-slate-700 font-semibold">Dewan Terbuka, SMK Kanowit</p>
+                    <p class="text-[11px] text-slate-500 leading-normal mt-0.5">
+                        Sila pastikan barisan murid bersedia di kedudukan yang ditetapkan sebelum jam 7.00 pagi.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Jawatankuasa & Hak Cipta bawah kulit belakang -->
+            <div class="mt-4 pt-4 border-t border-slate-100">
+                <h4 class="text-xs font-bold text-slate-800 mb-2">Jawatankuasa Induk</h4>
+                <div class="space-y-1 text-[11px] text-slate-600">
+                    <div class="flex justify-between"><span class="text-slate-400">Pengerusi:</span> <span class="font-bold text-slate-800">Pengetua SMK Kanowit</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Timbalan Pengerusi:</span> <span class="font-bold text-slate-800">PK Pentadbiran</span></div>
+                    <div class="flex justify-between"><span class="text-slate-400">Penyelaras:</span> <span class="font-bold text-slate-800">Majlis Kebajikan Guru & Kakitangan</span></div>
+                </div>
+                <p class="text-[9px] text-slate-400 text-center mt-6 uppercase tracking-wider">
+                    &copy; 2026 SMK Kanowit • Developed by AM
+                </p>
+            </div>
+        </div>
+
+        <!-- PANEL RIGHT: KULIT HADAPAN (COVER UTAMA - KEKAL WALLPAPER ASAL) -->
+        <div class="brochure-panel pl-2 bg-slate-900 text-white rounded-xl p-6 relative overflow-hidden">
+            <!-- Kekal Corak Geometrik Abstrak Asal -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <div class="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-teal-400 blur-3xl"></div>
+                <div class="absolute -bottom-10 -right-10 w-60 h-60 rounded-full bg-blue-500 blur-3xl"></div>
+            </div>
+
+            <div class="relative z-10 text-center my-auto space-y-4">
+                <span class="bg-blue-800/80 backdrop-blur text-[10px] font-semibold px-3 py-1 rounded-full border border-blue-700 tracking-widest uppercase">BUKU PROGRAM DIGITAL</span>
+                
+                <h1 class="text-3xl font-extrabold tracking-tight serif-title pt-2 bg-clip-text text-transparent bg-gradient-to-r from-teal-200 to-white">
+                    SAMBUTAN HARI GURU
+                </h1>
+                <h2 class="text-xl font-light tracking-widest text-teal-300">SMK KANOWIT 2026</h2>
+
+                <!-- Kad Tema Luaran -->
+                <div class="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl max-w-xs mx-auto my-6">
+                    <span class="text-[9px] text-teal-400 font-bold tracking-widest uppercase block mb-1">TEMA HARI GURU</span>
+                    <p class="text-sm font-bold italic text-orange-200">"Guru Bitara Nadi Negara"</p>
+                </div>
+
+                <!-- Perincian Masa -->
+                <div class="text-[11px] text-slate-300 space-y-1 pt-4">
+                    <p class="font-semibold text-slate-200"><i class="far fa-calendar-alt text-teal-400 mr-1"></i> Selasa, 19 Mei 2026</p>
+                    <p class="text-teal-300 font-medium"><i class="far fa-clock text-orange-400 mr-1"></i> 7.30 Pagi — 9.30 Pagi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BAHAGIAN 2: DALAMAN (KANDUNGAN KIRI = TENTATIF | KANDUNGAN KANAN = LAFAZ IKRAR & SEKSYEN LAGU) -->
+    <div class="bifold-page" id="brochure-inner">
+        
+        <!-- PANEL LEFT: TENTATIF PROGRAM (ATURCARA) -->
+        <div class="brochure-panel pr-2">
+            <div>
+                <div class="border-b-4 border-teal-600 pb-2 mb-3">
+                    <h3 class="text-lg font-bold text-slate-900 uppercase tracking-wide">Tentatif Program</h3>
+                </div>
+                
+                <!-- Item Aturcara Padat -->
+                <div class="space-y-2 text-[10.5px]">
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">07.00 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Ketibaan</span> Pendaftaran guru-guru SMK Kanowit, para pelajar & jemputan.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">07.10 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Majlis Bermula</span> Ketibaan Pengetua, nyanyian lagu rasmi & bacaan doa.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">07.20 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Ucapan Aluan</span> Ucapan wakil Ketua Pelajar & Perasmian Tuan Pengetua.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">07.35 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Perutusan Rasmi</span> Bacaan Perutusan KPPM & Menteri Pendidikan Malaysia.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">07.45 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Ikrar & Simbolik</span> Lafaz ikrar oleh En. Balintian Anak Nobert Jubit & Potong Kek.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">07.55 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Persembahan</span> Persembahan khas guru, penyampaian anugerah & cenderamata.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">08.10 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Nyanyian Sesi</span> Sesi nyanyian patriotik lagu-lagu rasmi pendidik.</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">08.20 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Lagu Sekolah</span> Nyanyian penutup Lagu Sekolah "Wawasan Sejati".</p>
+                    </div>
+                    <div class="flex gap-2 bg-slate-50 p-1.5 rounded-lg border border-slate-100">
+                        <span class="font-bold text-teal-700 w-16 shrink-0">08.25 AM</span>
+                        <p class="text-slate-700"><span class="font-bold text-slate-900 block">Jamuan Khas</span> Majlis jamuan makan khas sempena Hari Guru di bilik khas.</p>
+                    </div>
+                    <div class="flex gap-2 bg-orange-50 p-1.5 rounded-lg border border-orange-100">
+                        <span class="font-bold text-orange-700 w-16 shrink-0">09.30 AM</span>
+                        <p class="text-orange-800"><span class="font-bold text-orange-950 block">Bersurai</span> Sesi fotografi rasmi dan tamat majlis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANEL RIGHT: LAFAZ IKRAR & KETIGA-TIGA SEKSYEN LAGU -->
+        <div class="brochure-panel pl-2">
+            <div>
+                <div class="border-b-4 border-teal-600 pb-1.5 mb-2">
+                    <h3 class="text-md font-bold text-slate-900 uppercase tracking-wide">Ikrar & Koleksi Lagu</h3>
+                </div>
+
+                <!-- Teks Ikrar -->
+                <div class="bg-slate-950 text-slate-200 p-2.5 rounded-xl text-[9.5px] leading-relaxed italic mb-2">
+                    <p class="font-bold text-teal-400 not-italic text-[9.5px] mb-0.5">IKRAR HARI GURU (En. Balintian Anak Nobert Jubit)</p>
+                    "Bahawasanya kami, guru-guru negara Malaysia, dengan ini berikrar, mendukung terus cita-cita kami terhadap tugas kami. Kami akan berbakti kepada masyarakat dan negara kami. Kami sentiasa menjunjung Perlembagaan negara, kami mengamalkan prinsip-prinsip Rukun Negara pada setiap masa."
+                </div>
+
+                <!-- Lirik Tiga Lagu Ringkas & Padat -->
+                <div class="space-y-1.5 text-[8px] leading-tight">
+                    <div class="grid grid-cols-2 gap-2">
+                        <!-- Lagu 1 -->
+                        <div class="bg-blue-50/60 p-1.5 rounded-lg border border-blue-100">
+                            <p class="font-bold text-blue-900 mb-0.5 text-center uppercase">1. Kami Guru Malaysia</p>
+                            <p class="text-slate-600 text-center whitespace-pre-line">Kami Guru Malaysia, Berikrar dan berjanji
+                            Mendidik dan memimpin, Putra putri negara kita
+                            Pada Seri Paduka, Kami tumpahkan setia
+                            Rukun Negara kita, Panduan hidup semua
+                            Di bidang pembangunan, Kami tetap bersama
+                            Membantu, membina, Negara yang tercinta</p>
+                        </div>
+                        <!-- Lagu 2 -->
+                        <div class="bg-orange-50/60 p-1.5 rounded-lg border border-orange-100">
+                            <p class="font-bold text-orange-900 mb-0.5 text-center uppercase">2. Pendidik Bumi Kenyalang</p>
+                            <p class="text-slate-600 text-center whitespace-pre-line">Pendidik Bumi Kenyalang, Berdiri teguh di pentas dunia
+                            Mendidik anak bangsa tercinta, Mencapai cita mulia
+                            [Korus] Berbakti tanpa rasa jemu
+                            Mencurah bakti dan tenaga, Demi masa depan negara
+                            Kita adalah obor penyuluh, Menerangi kegelapan</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Lagu 3: Lagu Sekolah (Ditambah Semula) -->
+                    <div class="bg-emerald-50/60 p-1.5 rounded-lg border border-emerald-100">
+                        <p class="font-bold text-emerald-900 mb-0.5 text-center uppercase">3. Lagu Sekolah (Wawasan Sejati)</p>
+                        <p class="text-slate-600 text-center italic leading-normal">
+                            SMK Kanowit tercinta, medan ilmu ditimba. Indah mega penuh ceria, warganya berbilang bangsa. Kami punya wawasan mulia, sekolah premier impian semua. Keunggulan terus dicipta, berwatak dan berbudaya, bakat diasah jiwa suci. Nilai murni diamalkan, bijaksana pekerti mulia. Ilmu penuh di dada, kami bersatu hati. Kecemarlangan milik kami, kuat azam jati diri, sedia menabur bakti!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGIK ATURAN UNTUK MUAT TURUN HTML -->
+    <script>
+        function downloadHTML() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const link = document.createElement("a");
+            
+            link.href = URL.createObjectURL(blob);
+            link.download = "Broshur_Bifold_Hari_Guru_SMKK_2026.html";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
